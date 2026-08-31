@@ -13,34 +13,34 @@
 // Sets default values
 APooCharacter::APooCharacter()
 {
-	//½ºÇÁ¸µ ¾Ï ÄÄÆ÷³ÍÆ® »ı¼º
+	//ìŠ¤í”„ë§ ì•” ì»´í¬ë„ŒíŠ¸ ìƒì„±
 	SpringArmComponent = CreateDefaultSubobject<USpringArmComponent>(TEXT("SpringArmComponent"));
-	//½ºÇÁ¸µ ¾Ï ÄÄÆÛ³ÍÆ®¸¦ ·çÆ®¿¡ ºÎÂø
+	//ìŠ¤í”„ë§ ì•” ì»´í¼ë„ŒíŠ¸ë¥¼ ë£¨íŠ¸ì— ë¶€ì°©
 	SpringArmComponent->SetupAttachment(RootComponent);
-	//½ºÇÁ¸µ ¾Ï ÄÄÆÛ³ÍÆ® ±æÀÌ ¼³Á¤
+	//ìŠ¤í”„ë§ ì•” ì»´í¼ë„ŒíŠ¸ ê¸¸ì´ ì„¤ì •
 	SpringArmComponent->TargetArmLength = 300.0f;
-	//½ºÇÁ¸µ ¾Ï ÄÄÆ÷³ÍÆ® È¸Àü°ªÀ» ÄÁÆ®·Ñ·¯ È¸Àü°ª¿¡ ¸ÂÃã
+	//ìŠ¤í”„ë§ ì•” ì»´í¬ë„ŒíŠ¸ íšŒì „ê°’ì„ ì»¨íŠ¸ë¡¤ëŸ¬ íšŒì „ê°’ì— ë§ì¶¤
 	SpringArmComponent->bUsePawnControlRotation = true;
 
-	//Ä«¸Ş¶ó ÄÄÆ÷³ÍÆ® »ı¼º
+	//ì¹´ë©”ë¼ ì»´í¬ë„ŒíŠ¸ ìƒì„±
 	CameraComponent = CreateDefaultSubobject<UCameraComponent>(TEXT("CameraComponent"));
-	//Ä«¸Ş¶ó ÄÄÆ÷³ÍÆ®¸¦ ½ºÇÁ¸µ ¾Ï ÄÄÆ÷³ÍÆ® ³¡¿¡ ºÎÂø
+	//ì¹´ë©”ë¼ ì»´í¬ë„ŒíŠ¸ë¥¼ ìŠ¤í”„ë§ ì•” ì»´í¬ë„ŒíŠ¸ ëì— ë¶€ì°©
 	CameraComponent->SetupAttachment(SpringArmComponent, USpringArmComponent::SocketName);
-	//Ä«¸Ş¶ó ÄÄÆÛ³ÍÆ® È¸Àü°ªÀº ÄÁÆ®·Ñ·¯ È¸Àü°ª¿¡ ¸ÂÃßÁö ¾ÊÀ½
+	//ì¹´ë©”ë¼ ì»´í¼ë„ŒíŠ¸ íšŒì „ê°’ì€ ì»¨íŠ¸ë¡¤ëŸ¬ íšŒì „ê°’ì— ë§ì¶”ì§€ ì•ŠìŒ
 	CameraComponent->bUsePawnControlRotation = false;
 	
-	//ÃÖ´ë Ã¼·Â ¼³Á¤
+	//ìµœëŒ€ ì²´ë ¥ ì„¤ì •
 	MaxHealth = 100.0f;
-	//ÇöÀç Ã¼·Â ¼³Á¤
+	//í˜„ì¬ ì²´ë ¥ ì„¤ì •
 	CurrentHealth = MaxHealth;
 	
-	//±âº» ÀÌµ¿ ¼Óµµ ¼³Á¤
+	//ê¸°ë³¸ ì´ë™ ì†ë„ ì„¤ì •
 	WalkSpeed = 600.0f;
 
-	//Ä³¸¯ÅÍ ÀÌµ¿ ¼Óµµ Àû¿ë
+	//ìºë¦­í„° ì´ë™ ì†ë„ ì ìš©
 	GetCharacterMovement()->MaxWalkSpeed = WalkSpeed;
 
-	//´Ş¸®±â ¼Óµµ ¹è¼ö ¼³Á¤
+	//ë‹¬ë¦¬ê¸° ì†ë„ ë°°ìˆ˜ ì„¤ì •
 	SprintMultiplier = 3.0f;
 
 
@@ -50,31 +50,31 @@ APooCharacter::APooCharacter()
 
 void APooCharacter::Move(const FInputActionValue& Value)
 {
-	//ÄÁÆ®·Ñ·¯ À¯È¿ Ã¼Å©
+	//ì»¨íŠ¸ë¡¤ëŸ¬ ìœ íš¨ ì²´í¬
 	if (!Controller)return;
 
-	//ÀÔ·Â°ª FVector2D·Î º¯È¯
+	//ì…ë ¥ê°’ FVector2Dë¡œ ë³€í™˜
 	FVector2D InputVector = Value.Get<FVector2D>();
 
-	//xÃà ÀÌµ¿ 0 À¯È¿¼º Ã¼Å©
+	//xì¶• ì´ë™ 0 ìœ íš¨ì„± ì²´í¬
 	if (!FMath::IsNearlyZero(InputVector.X))
 	{
-		//ÄÁÆ®·Ñ·¯ Yaw È¸Àü°ªÀ¸·Î ¹æÇâ º¤ÅÍ °è»ê
+		//ì»¨íŠ¸ë¡¤ëŸ¬ Yaw íšŒì „ê°’ìœ¼ë¡œ ë°©í–¥ ë²¡í„° ê³„ì‚°
 		const FRotator Rotation = Controller->GetControlRotation();
 		const FRotator YawRotation(0, Rotation.Yaw, 0);
 		const FVector Direction = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::X);
-		//Ä³¸¯ÅÍ ÀÌµ¿
+		//ìºë¦­í„° ì´ë™
 		AddMovementInput(Direction, InputVector.X);
 	}
 
-	//yÃà ÀÌµ¿ 0 À¯È¿¼º Ã¼Å©
+	//yì¶• ì´ë™ 0 ìœ íš¨ì„± ì²´í¬
 	if (!FMath::IsNearlyZero(InputVector.Y))
 	{
-		//ÄÁÆ®·Ñ·¯ Yaw È¸Àü°ªÀ¸·Î ¹æÇâ º¤ÅÍ °è»ê
+		//ì»¨íŠ¸ë¡¤ëŸ¬ Yaw íšŒì „ê°’ìœ¼ë¡œ ë°©í–¥ ë²¡í„° ê³„ì‚°
 		const FRotator Rotation = Controller->GetControlRotation();
 		const FRotator YawRotation(0, Rotation.Yaw, 0);
 		const FVector Direction = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::Y);
-		//Ä³¸¯ÅÍ ÀÌµ¿
+		//ìºë¦­í„° ì´ë™
 		AddMovementInput(Direction, InputVector.Y);
 	}
 
@@ -90,21 +90,21 @@ void APooCharacter::BeginPlay()
 
 void APooCharacter::Look(const FInputActionValue& Value)
 {
-	//ÄÁÆ®·Ñ·¯ À¯È¿ Ã¼Å©
+	//ì»¨íŠ¸ë¡¤ëŸ¬ ìœ íš¨ ì²´í¬
 	if (!Controller)return;
 
-	//ÀÔ·Â°ª FVector2D·Î º¯È¯
+	//ì…ë ¥ê°’ FVector2Dë¡œ ë³€í™˜
 	FVector2D InputVector = Value.Get<FVector2D>();
 
-	//ÄÁÆ®·Ñ·¯ Yaw È¸Àü
+	//ì»¨íŠ¸ë¡¤ëŸ¬ Yaw íšŒì „
 	AddControllerYawInput(InputVector.X);
-	//ÄÁÆ®·Ñ·¯ Pitch È¸Àü
+	//ì»¨íŠ¸ë¡¤ëŸ¬ Pitch íšŒì „
 	AddControllerPitchInput(InputVector.Y);
 }
 
 void APooCharacter::JumpStart(const FInputActionValue& Value)
 {
-	//ÀÔ·Â À¯È¿¼º Ã¼Å©
+	//ì…ë ¥ ìœ íš¨ì„± ì²´í¬
 	if(Value.Get<bool>())
 	{
 		Jump();
@@ -113,7 +113,7 @@ void APooCharacter::JumpStart(const FInputActionValue& Value)
 
 void APooCharacter::JumpEnd(const FInputActionValue& Value)
 {
-	//ÀÔ·Â À¯È¿¼º Ã¼Å©
+	//ì…ë ¥ ìœ íš¨ì„± ì²´í¬
 	if (!Value.Get<bool>())
 	{
 		StopJumping();
@@ -123,22 +123,22 @@ void APooCharacter::JumpEnd(const FInputActionValue& Value)
 
 void APooCharacter::SprintStart(const FInputActionValue& Value)
 {
-	//ÀÔ·Â À¯È¿¼º Ã¼Å©
+	//ì…ë ¥ ìœ íš¨ì„± ì²´í¬
 	if (Value.Get<bool>())
 	{
-		//´Ş¸®±â ¼Óµµ °è»ê
+		//ë‹¬ë¦¬ê¸° ì†ë„ ê³„ì‚°
 		SprintSpeed = WalkSpeed * SprintMultiplier;
-		//Ä³¸¯ÅÍ ÀÌµ¿ ¼Óµµ Àû¿ë
+		//ìºë¦­í„° ì´ë™ ì†ë„ ì ìš©
 		GetCharacterMovement()->MaxWalkSpeed = SprintSpeed;
 	}
 }
 
 void APooCharacter::SprintEnd(const FInputActionValue& Value)
 {
-	//ÀÔ·Â À¯È¿¼º Ã¼Å©
+	//ì…ë ¥ ìœ íš¨ì„± ì²´í¬
 	if (!Value.Get<bool>())
 	{
-		//Ä³¸¯ÅÍ ÀÌµ¿ ¼Óµµ Àû¿ë
+		//ìºë¦­í„° ì´ë™ ì†ë„ ì ìš©
 		GetCharacterMovement()->MaxWalkSpeed = WalkSpeed;
 	}
 }
@@ -155,48 +155,48 @@ void APooCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompon
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 
-	//¾ğ¸®¾ó ¿£Áø ÀÎÇ² ÄÄÆÛ³ÍÆ® Cast
+	//ì–¸ë¦¬ì–¼ ì—”ì§„ ì¸í’‹ ì»´í¼ë„ŒíŠ¸ Cast
 	if (UEnhancedInputComponent* EnhancedInputComponent = Cast<UEnhancedInputComponent>(PlayerInputComponent))
 	{
-		//ÇÃ·¹ÀÌ¾î ÄÁÆ®·Ñ·¯ Cast
+		//í”Œë ˆì´ì–´ ì»¨íŠ¸ë¡¤ëŸ¬ Cast
 		if (APooPlayerController* PlayerController = Cast<APooPlayerController>(GetController()))
 		{
-			//ÄÁÆ®·Ñ·¯ Move ¾×¼Ç ¹ÙÀÎµù
+			//ì»¨íŠ¸ë¡¤ëŸ¬ Move ì•¡ì…˜ ë°”ì¸ë”©
 			EnhancedInputComponent->BindAction(
 				PlayerController->MoveAction,
 				ETriggerEvent::Triggered, 
 				this,
 				&APooCharacter::Move);
 
-			//ÄÁÆ®·Ñ·¯ Look ¾×¼Ç ¹ÙÀÎµù
+			//ì»¨íŠ¸ë¡¤ëŸ¬ Look ì•¡ì…˜ ë°”ì¸ë”©
 			EnhancedInputComponent->BindAction(
 				PlayerController->LookAction,
 				ETriggerEvent::Triggered,
 				this,
 				&APooCharacter::Look);
 
-			//ÄÁÆ®·Ñ·¯ Jump ½ÃÀÛ ¾×¼Ç ¹ÙÀÎµù
+			//ì»¨íŠ¸ë¡¤ëŸ¬ Jump ì‹œì‘ ì•¡ì…˜ ë°”ì¸ë”©
 			EnhancedInputComponent->BindAction(
 				PlayerController->JumpAction,
 				ETriggerEvent::Triggered,
 				this,
 				&APooCharacter::JumpStart);
 
-			//ÄÁÆ®·Ñ·¯ Jump ³¡ ¾×¼Ç ¹ÙÀÎµù
+			//ì»¨íŠ¸ë¡¤ëŸ¬ Jump ë ì•¡ì…˜ ë°”ì¸ë”©
 			EnhancedInputComponent->BindAction(
 				PlayerController->JumpAction,
 				ETriggerEvent::Completed,
 				this,
 				&APooCharacter::JumpEnd);
 
-			//ÄÁÆ®·Ñ·¯ Sprint ½ÃÀÛ ¾×¼Ç ¹ÙÀÎµù
+			//ì»¨íŠ¸ë¡¤ëŸ¬ Sprint ì‹œì‘ ì•¡ì…˜ ë°”ì¸ë”©
 			EnhancedInputComponent->BindAction(
 				PlayerController->SprintAction,
 				ETriggerEvent::Triggered,
 				this,
 				&APooCharacter::SprintStart);
 
-			//ÄÁÆ®·Ñ·¯ Sprint ³¡ ¾×¼Ç ¹ÙÀÎµù
+			//ì»¨íŠ¸ë¡¤ëŸ¬ Sprint ë ì•¡ì…˜ ë°”ì¸ë”©
 			EnhancedInputComponent->BindAction(
 				PlayerController->SprintAction,
 				ETriggerEvent::Completed,

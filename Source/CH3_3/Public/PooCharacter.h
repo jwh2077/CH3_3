@@ -17,49 +17,49 @@ public:
 	// Sets default values for this character's properties
 	APooCharacter();
 
-	//Ä«¸Ş¶ó ÄÄÆÛ³ÍÆ®
+	//ì¹´ë©”ë¼ ì»´í¼ë„ŒíŠ¸
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Camera")	
 	UCameraComponent* CameraComponent;
-	//Ä«¸Ş¶ó ½ºÇÁ¸µ ¾Ï ÄÄÆ÷³ÍÆ®
+	//ì¹´ë©”ë¼ ìŠ¤í”„ë§ ì•” ì»´í¬ë„ŒíŠ¸
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Camera")
 	USpringArmComponent* SpringArmComponent;
 
-	//ÃÖ´ë Ã¼·Â
+	//ìµœëŒ€ ì²´ë ¥
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Health")
-	float MaxHealth; //ÃÖ´ë Ã¼·Â
+	float MaxHealth; //ìµœëŒ€ ì²´ë ¥
 
-	//ÇöÀç Ã¼·Â
+	//í˜„ì¬ ì²´ë ¥
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Health")
-	float CurrentHealth; //ÇöÀç Ã¼·Â
+	float CurrentHealth; //í˜„ì¬ ì²´ë ¥
 
-	//±âº»ÀÌµ¿ ¼Óµµ
+	//ê¸°ë³¸ì´ë™ ì†ë„
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Movement")
-	float WalkSpeed; //±âº» ÀÌµ¿ ¼Óµµ
+	float WalkSpeed; //ê¸°ë³¸ ì´ë™ ì†ë„
 
-	//´Ş¸®±â ¼Óµµ ¹è¼ö
+	//ë‹¬ë¦¬ê¸° ì†ë„ ë°°ìˆ˜
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Movement")
-	float SprintMultiplier; //´Ş¸®±â ¼Óµµ ¹è¼ö
+	float SprintMultiplier; //ë‹¬ë¦¬ê¸° ì†ë„ ë°°ìˆ˜
 	
-	//Move ÀÎÇ² ¾×¼Ç ¼³Á¤
+	//Move ì¸í’‹ ì•¡ì…˜ ì„¤ì •
 	UFUNCTION(BlueprintCallable, Category = "Input")
 	void Move(const FInputActionValue& Value);
 
-	//Look ÀÎÇ² ¾×¼Ç ¼³Á¤
+	//Look ì¸í’‹ ì•¡ì…˜ ì„¤ì •
 	UFUNCTION(BlueprintCallable, Category = "Input")
 	void Look(const FInputActionValue& Value);
 
-	//Jump ½ÃÀÛ
+	//Jump ì‹œì‘
 	UFUNCTION(BlueprintCallable, Category = "Input")
 	void JumpStart(const FInputActionValue& Value);
 
-	//jump ³¡
+	//jump ë
 	void JumpEnd(const FInputActionValue& Value);
 
-	//Sprint ½ÃÀÛ
+	//Sprint ì‹œì‘
 	UFUNCTION(BlueprintCallable, Category = "Input")
 	void SprintStart(const FInputActionValue& Value);
 
-	//Sprint ³¡
+	//Sprint ë
 	UFUNCTION(BlueprintCallable, Category = "Input")
 	void SprintEnd(const FInputActionValue& Value);
 
@@ -67,7 +67,7 @@ public:
 protected:
 	virtual void BeginPlay() override;
 
-	float SprintSpeed; //´Ş¸®±â ¼Óµµ	
+	float SprintSpeed; //ë‹¬ë¦¬ê¸° ì†ë„	
 
 public:	
 	// Called every frame
