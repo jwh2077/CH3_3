@@ -6,6 +6,8 @@
 #include "GameFramework/SpringArmComponent.h"
 #include "PooCharacter.generated.h"
 
+struct FInputActionValue;
+
 UCLASS()
 class CH3_3_API APooCharacter : public ACharacter
 {
@@ -22,11 +24,50 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Camera")
 	USpringArmComponent* SpringArmComponent;
 
+	//최대 체력
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Health")
+	float MaxHealth; //최대 체력
+
+	//현재 체력
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Health")
+	float CurrentHealth; //현재 체력
+
+	//기본이동 속도
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Movement")
+	float WalkSpeed; //기본 이동 속도
+
+	//달리기 속도 배수
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Movement")
+	float SprintMultiplier; //달리기 속도 배수
 	
+	//Move 인풋 액션 설정
+	UFUNCTION(BlueprintCallable, Category = "Input")
+	void Move(const FInputActionValue& Value);
+
+	//Look 인풋 액션 설정
+	UFUNCTION(BlueprintCallable, Category = "Input")
+	void Look(const FInputActionValue& Value);
+
+	//Jump 시작
+	UFUNCTION(BlueprintCallable, Category = "Input")
+	void JumpStart(const FInputActionValue& Value);
+
+	//jump 끝
+	void JumpEnd(const FInputActionValue& Value);
+
+	//Sprint 시작
+	UFUNCTION(BlueprintCallable, Category = "Input")
+	void SprintStart(const FInputActionValue& Value);
+
+	//Sprint 끝
+	UFUNCTION(BlueprintCallable, Category = "Input")
+	void SprintEnd(const FInputActionValue& Value);
+
 
 protected:
-	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
+
+	float SprintSpeed; //달리기 속도	
 
 public:	
 	// Called every frame
