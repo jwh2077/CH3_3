@@ -4,14 +4,16 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/GameMode.h"
-#include "PlayerGameMode.generated.h"
+#include "PooGameMode.generated.h"
 
 /**
  * 
  */
 UCLASS()
-class CH3_3_API APlayerGameMode : public AGameMode
+class CH3_3_API APooGameMode : public AGameMode
 {
 	GENERATED_BODY()
 	
+public:
+	APooGameMode();	
 };
