@@ -3,13 +3,18 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "ItemSpawnRow.generated.h"
 
-/**
- * 
- */
-class CH3_3_API ItemSpawnRow
+USTRUCT(BlueprintType)
+struct FItemSpawnRow : public FTableRowBase
 {
+	GENERATED_BODY()
+
 public:
-	ItemSpawnRow();
-	~ItemSpawnRow();
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	FName ItemName;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	TSubclassOf<AActor> ItemClass;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	float Spawnchance;
 };
