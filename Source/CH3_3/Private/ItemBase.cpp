@@ -53,10 +53,50 @@ void AItemBase::OnItemEndOverlap(
 
 void AItemBase::ActivateItem(AActor* OtherActor)
 {
+	//변수로 저장
+	UParticleSystemComponent* Particle = nullptr;
+
+	// 아이템 획득 효과 재생
+	if (PickupEffect)
+	{
+		Particle = UGameplayStatics::SpawnEmitterAtLocation(
+			GetWorld(),
+			PickupEffect,
+			GetActorLocation(),
+			GetActorRotation(),
+			true
+		);
+	}
+	// 아이템 획득 사운드 재생
+	if (PickupSound)
+	{
+		UGameplayStatics::PlaySoundAtLocation(
+			GetWorld(),
+			PickupSound,
+			GetActorLocation());
+	}
+
+	if (Particle)
+	{
+		// 파티클 시스템이 끝난 후 파티클을 제거하기 위해 타이머 설정
+		FTimerHandle DistroyTimerHandle;
+
+		// 람다 함수를 사용하여 타이머가 만료되면 파티클 컴포넌트를 제거
+		GetWorld()->GetTimerManager().SetTimer(
+			DistroyTimerHandle,
+			[Particle]
+			{
+				Particle->DestroyComponent();
+			},
+			2.0f,
+			false
+		);
+	}
 }
 
 void AItemBase::DestroyItem()
 {
+	//아이템 삭제
 	Destroy();
 }
 
@@ -69,13 +109,12 @@ void AItemBase::BeginPlay()
 
 FName AItemBase::GetItemType() const
 {
-	return FName();
+	return ItemType;
 }
 
 // Called every frame
 void AItemBase::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-
 }
 
